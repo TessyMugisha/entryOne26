@@ -1,0 +1,96 @@
+Build a responsive interactive website for my project called EntryOne. The website must feel like a real journal/book that starts closed and then opens. Use HTML, CSS, and vanilla JavaScript (no frameworks). Keep it lightweight and easy to edit.
+
+Design + Mood
+
+Calm, editorial, journal-like. Not a modern SaaS landing page.
+
+Colors: off-white/cream background, charcoal text, subtle accent (muted blue or olive).
+
+Typography: clean and readable, with an editorial feel (use Google Fonts like Playfair Display for headings and Inter or Source Sans 3 for body).
+
+Add subtle paper texture or grain (CSS background pattern is fine, do not rely on heavy images).
+
+Avoid bright colors, gradients, or flashy animations.
+
+Page 1: Closed Journal Landing (the “cover”)
+
+First screen shows a closed black/dark journal centered on the page, similar to a Moleskine notebook.
+
+The journal cover has minimal text centered:
+
+Title: “EntryOne”
+
+Subtitle: “A living archive of beginnings”
+
+Include a primary button: “Open the Journal”
+
+Add subtle details to make it feel real: rounded corners, slight shadow, and an elastic band on the right side (like a notebook strap).
+
+When user clicks “Open the Journal”:
+
+Animate the journal opening (simple but elegant). Use CSS transforms + JS: the cover “swings” open, then transition to the next view.
+
+After animation, reveal the Archive homepage view.
+
+Page 2: Archive Homepage (Archive Box / Folder Tabs)
+
+After opening, show an archive-style layout:
+
+Top navigation designed like folder tabs (not a normal navbar).
+
+Tabs: Archive, About, Mission, Contribute.
+
+The main content area should look like an archive box/index cards:
+
+Cards for entries (title + small metadata + tag).
+
+Each card has: Name, Role/Context, Category tag (Beginning/Pivot/Quiet Win), and a button “Open Entry”.
+
+Clicking an entry opens a link (use placeholder Notion URLs for now).
+
+Add a search bar and a simple filter dropdown for tags (front-end filtering only).
+
+Field Journal Entry Visual Motifs (like the open journal photo)
+
+Inside the Archive view, add a “Featured Spread” section that visually references:
+
+a letter envelope on the left page (a rectangle card that looks like an envelope)
+
+a polaroid card on the right page (photo placeholder with tape style at top)
+
+small caption text like “letter to your future self” and “polaroid of yourself at the moment”
+This section can be static (no actual images needed), but should mimic the layout and feel.
+
+Content Requirements
+
+Include sample entries (3–6) in a JS array with fields:
+
+id, title, personName, role, category, notionUrl, date
+
+Generate the entry cards dynamically from this data.
+
+Make it easy to add more entries by editing the array.
+
+Interaction Requirements
+
+Smooth transitions between “cover” and “archive” views.
+
+Support keyboard accessibility:
+
+Enter key opens the journal when button is focused.
+
+Mobile responsive:
+
+On mobile, the journal cover scales, tabs become scrollable, archive cards stack.
+
+Deliverables
+
+Provide index.html, styles.css, script.js.
+
+Clean, well-commented code.
+
+No build step required (just run as a static site).
+
+Include instructions in comments at the top of script.js on how to add new entries.
+
+Name the project “EntryOne Journal Archive”.

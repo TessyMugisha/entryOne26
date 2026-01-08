@@ -1,0 +1,193 @@
+Update my existing EntryOne website project. Keep it HTML + CSS + vanilla JavaScript (no frameworks). The goal is a cohesive, journal-first experience with an archive that feels like it lives inside the journal, not like a separate website.
+
+Core UX Fixes (Important)
+
+The closed journal cover must feel big and weighty:
+
+Journal cover should fill 60–70% of the viewport (taller and wider than now).
+
+Reduce extra whitespace around it.
+
+It must not feel like a small thumbnail.
+
+When “Open the Journal” is clicked, the transition should feel like a reveal, not a page jump:
+
+Animate the cover opening using CSS transforms.
+
+While opening, fade/expand the archive content as if it appears from inside the journal.
+
+Keep background consistent (paper/cream texture) so it feels continuous.
+
+Brand + Color System (Very Important)
+
+Unify the entire site under a restrained palette:
+
+Primary background: warm cream/off-white
+
+Text: charcoal/near-black
+
+One subtle accent color maximum (muted olive OR muted blue OR warm ink-brown).
+Remove the current multi-color feel.
+
+Category pills must NOT be green/blue/tan.
+Replace category tags with monochrome labels:
+
+Outlined pill with charcoal border, or
+
+Small caps tag text (BEGINNING / PIVOT / QUIET WIN)
+Use typography and border, not multiple colors.
+
+Typography
+
+Use editorial typography:
+
+Headings: serif (e.g., Playfair Display or Cormorant Garamond)
+
+Body/meta: clean sans (e.g., Inter or Source Sans 3)
+Hierarchy comes from spacing + size, not color.
+
+Layout Changes
+View 1: Closed Journal Landing (Cover)
+
+Center a large closed journal cover (dark/charcoal leather texture).
+
+Include:
+
+“EntryOne”
+
+“A Living Archive of Beginnings”
+
+Button: “Open the Journal”
+
+Add subtle realism: rounded corners, elastic band on right, soft shadow, bookmark ribbon at bottom.
+
+Button should be cream with charcoal text, subtle hover.
+
+View 2: Archive (After Open)
+
+Replace the top folder tabs with a more journal/archival navigation:
+
+Navigation Placement (Key change)
+
+Use a left-side vertical index (like a filing cabinet index or archive labels).
+
+Items: Archive, About, Mission, Contribute
+
+It should be subtle, not heavy.
+
+On mobile: index becomes a top horizontal scroll strip.
+
+Archive Layout
+
+Main area uses a calm cream background with gentle paper grain.
+
+Keep search bar at top of the main area.
+
+Keep a filter dropdown, but keep it minimal (monochrome styling).
+
+Entry Cards: Picture-forward “Artifacts”
+
+I want the archive cards to look like journal artifacts (polaroid/envelope/index card), inspired by scrapbook spreads.
+
+Required behavior
+
+Entries are generated dynamically from a JS array.
+
+Each entry has an artifactType field that controls its look:
+
+"polaroid"
+
+"envelope"
+
+"indexCard"
+
+Each entry card should visually contain:
+
+the artifact (CSS-generated, lightweight)
+
+a caption area BELOW it (title, name, role)
+
+a monochrome category label (no color coding)
+
+a link button: “Open Entry ↗” that opens the Notion URL
+
+Styling rules for artifacts
+
+Polaroid: white frame, slight rotation, tape strip at top, subtle shadow.
+
+Envelope: soft paper green or neutral paper tone is okay as the artifact itself (not the overall UI), with a small seal/star.
+
+Index card: off-white card with faint lines and a clipped corner.
+
+Keep the overall UI minimal; let the artifact be the visual element.
+
+Featured Spread Section
+
+Keep a “Featured Spread” section like a journal spread:
+
+Left side: Envelope card labeled “LETTER TO YOUR FUTURE SELF”
+
+Right side: Polaroid labeled “POLAROID PICTURE OF YOURSELF AT THE MOMENT”
+
+Add a small handwritten-style caption under the polaroid: “live, create, tell the story”
+This should look like a real spread: balanced whitespace, calm tones, subtle shadows.
+
+Content + Data Model
+
+In script.js, store entries like:
+
+id
+
+title
+
+personName
+
+role
+
+category (Beginning / Pivot / Quiet Win)
+
+artifactType (polaroid/envelope/indexCard)
+
+notionUrl
+
+date
+
+Generate:
+
+entry cards
+
+search filtering (by title/name/role)
+
+category filter
+
+Include 6 sample entries.
+
+Accessibility + Responsiveness
+
+Keyboard: Enter key triggers “Open the Journal” when focused.
+
+Focus outlines visible but tasteful.
+
+Mobile:
+
+Journal cover scales nicely.
+
+Left index becomes top scroll nav.
+
+Cards stack in 1 column.
+
+Deliverables
+
+index.html
+
+styles.css
+
+script.js
+
+Clean, well-commented code.
+
+No build step: static site runs immediately.
+
+Also: remove any “Made with Replit” badge if possible.
+
+Project name: EntryOne Journal Archive (v2)

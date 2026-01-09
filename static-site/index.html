@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EntryOne | A Living Archive of Beginnings</title>
+  <meta property="og:title" content="EntryOne | A Living Archive of Beginnings">
+  <meta property="og:description" content="A digital journal archive celebrating the moments that mark new chapters.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Source+Sans+3:wght@300;400;500;600&family=Architects+Daughter&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- CLOSED JOURNAL COVER -->
+  <div id="journal-landing" class="journal-landing">
+    <div class="journal-wrapper">
+      <div id="journal-cover" class="journal-cover" tabindex="0" role="button" aria-label="Open the journal">
+        <div class="journal-spine"></div>
+        <div class="journal-content">
+          <h1 class="journal-title">EntryOne</h1>
+          <p class="journal-subtitle">A Living Archive of Beginnings</p>
+          <button id="open-btn" class="open-btn">Open the Journal</button>
+        </div>
+        <div class="elastic-band"></div>
+        <div class="bookmark-ribbon"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ARCHIVE VIEW -->
+  <div id="archive-view" class="archive-view hidden">
+    <aside class="sidebar">
+      <h2 class="sidebar-title">EntryOne</h2>
+      <nav class="sidebar-nav">
+        <button class="nav-item active" data-section="archive">Archive</button>
+        <button class="nav-item" data-section="about">About</button>
+        <button class="nav-item" data-section="mission">Mission</button>
+        <button class="nav-item" data-section="contribute">Contribute</button>
+      </nav>
+    </aside>
+
+    <nav class="mobile-nav">
+      <button class="nav-item active" data-section="archive">Archive</button>
+      <button class="nav-item" data-section="about">About</button>
+      <button class="nav-item" data-section="mission">Mission</button>
+      <button class="nav-item" data-section="contribute">Contribute</button>
+    </nav>
+
+    <main class="main-content">
+      <!-- ARCHIVE SECTION -->
+      <section id="section-archive" class="section">
+        <header class="section-header">
+          <h1>Archive</h1>
+          <p>Stories of beginnings, pivots, and quiet wins.</p>
+        </header>
+
+        <div class="filters">
+          <div class="search-wrapper">
+            <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+            <input type="search" id="search-input" placeholder="Search entries..." class="search-input">
+          </div>
+          <select id="category-filter" class="category-filter">
+            <option value="all">All Categories</option>
+            <option value="Beginning">Beginning</option>
+            <option value="Pivot">Pivot</option>
+            <option value="Quiet Win">Quiet Win</option>
+          </select>
+        </div>
+
+        <div id="entries-grid" class="entries-grid"></div>
+
+        <!-- FEATURED SPREAD -->
+        <div class="featured-spread">
+          <h2>Featured Spread</h2>
+          <div class="spread-content">
+            <div class="spread-item">
+              <p class="spread-label">Letter to Your Future Self</p>
+              <div class="artifact-envelope">
+                <div class="envelope-flap"></div>
+                <div class="seal"></div>
+              </div>
+            </div>
+            <div class="spread-item">
+              <p class="spread-label">Polaroid Picture of Yourself at the Moment</p>
+              <div class="artifact-polaroid">
+                <div class="polaroid-photo"></div>
+              </div>
+              <p class="handwritten">live, create, tell the story</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ABOUT SECTION -->
+      <section id="section-about" class="section hidden">
+        <h1>About EntryOne</h1>
+        <p>EntryOne is a living archive dedicated to capturing the moments that mark new chapters in people's lives. We believe that every beginning, no matter how small, deserves to be documented and celebrated.</p>
+        <p>Through personal narratives and reflections, we create a tapestry of human experience—one entry at a time.</p>
+      </section>
+
+      <!-- MISSION SECTION -->
+      <section id="section-mission" class="section hidden">
+        <h1>Our Mission</h1>
+        <p>To collect and preserve the stories of beginnings—those pivotal moments when someone chose to start anew, pivot directions, or celebrate a quiet personal victory.</p>
+        <p>We aim to inspire others by showing that every journey starts with a single, brave step forward.</p>
+      </section>
+
+      <!-- CONTRIBUTE SECTION -->
+      <section id="section-contribute" class="section hidden">
+        <h1>Share Your Entry</h1>
+        <p>Do you have a beginning worth sharing? We'd love to hear your story and add it to our growing archive of human experience.</p>
+        <button class="submit-btn">Submit Your Story</button>
+      </section>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

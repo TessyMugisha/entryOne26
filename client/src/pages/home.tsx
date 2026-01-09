@@ -1,25 +1,6 @@
 import { useState, useCallback } from 'react';
 import { Search, ChevronDown, ArrowUpRight } from 'lucide-react';
 
-/*
- * ===========================================
- * ENTRYONE JOURNAL ARCHIVE (v2)
- * ===========================================
- * 
- * HOW TO ADD NEW ENTRIES:
- * -----------------------
- * Add new entry objects to the ENTRIES array below.
- * Each entry must have:
- *   - id: unique string identifier
- *   - title: entry title
- *   - personName: name of the person
- *   - role: their role or context
- *   - category: "Beginning" | "Pivot" | "Quiet Win"
- *   - artifactType: "polaroid" | "envelope" | "indexCard"
- *   - notionUrl: link to full entry
- *   - date: date string
- */
-
 interface Entry {
   id: string;
   title: string;
@@ -98,19 +79,19 @@ const NAV_ITEMS = ['Archive', 'About', 'Mission', 'Contribute'] as const;
 type NavType = typeof NAV_ITEMS[number];
 
 const ArtifactPolaroid = () => (
-  <div className="artifact-polaroid w-full max-w-[140px] mx-auto">
-    <div className="bg-[hsl(35,10%,88%)] aspect-square" />
+  <div className="artifact-polaroid w-full max-w-[130px] mx-auto">
+    <div className="bg-gradient-to-b from-[hsl(0,0%,95%)] to-[hsl(0,0%,90%)] aspect-square rounded-sm" />
   </div>
 );
 
 const ArtifactEnvelope = () => (
-  <div className="artifact-envelope w-full max-w-[140px] h-[100px] mx-auto rounded-sm">
+  <div className="artifact-envelope w-full max-w-[130px] h-[90px] mx-auto">
     <div className="seal" />
   </div>
 );
 
 const ArtifactIndexCard = () => (
-  <div className="artifact-indexcard w-full max-w-[160px] h-[100px] mx-auto rounded-sm" />
+  <div className="artifact-indexcard w-full max-w-[150px] h-[95px] mx-auto" />
 );
 
 const EntryCard = ({ entry, index }: { entry: Entry; index: number }) => {
@@ -122,10 +103,10 @@ const EntryCard = ({ entry, index }: { entry: Entry; index: number }) => {
 
   return (
     <div 
-      className={`opacity-0 animate-fade-in-up stagger-${(index % 6) + 1}`}
+      className={`opacity-0 animate-fade-in-up stagger-${(index % 6) + 1} group`}
       data-testid={`card-entry-${entry.id}`}
     >
-      <div className="mb-4">
+      <div className="mb-5 transition-transform duration-300 group-hover:scale-[1.02]">
         <Artifact />
       </div>
       <div className="text-center space-y-2">
@@ -133,31 +114,28 @@ const EntryCard = ({ entry, index }: { entry: Entry; index: number }) => {
           {entry.category.toUpperCase()}
         </span>
         <h3 
-          className="text-base font-serif leading-snug"
-          style={{ fontFamily: 'Playfair Display, serif', color: 'hsl(30 15% 15%)' }}
+          className="text-[15px] leading-snug font-medium"
+          style={{ fontFamily: 'Cormorant Garamond, serif', color: 'hsl(0 0% 8%)' }}
           data-testid={`text-entry-title-${entry.id}`}
         >
           {entry.title}
         </h3>
         <p 
-          className="text-sm"
-          style={{ color: 'hsl(30 10% 35%)' }}
+          className="text-[13px]"
+          style={{ color: 'hsl(0 0% 35%)' }}
           data-testid={`text-entry-person-${entry.id}`}
         >
           {entry.personName}
         </p>
-        <p 
-          className="text-xs"
-          style={{ color: 'hsl(30 8% 50%)' }}
-        >
+        <p className="text-[11px]" style={{ color: 'hsl(0 0% 55%)' }}>
           {entry.role}
         </p>
         <a
           href={entry.notionUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-1.5 text-sm font-medium mt-2 transition-colors"
-          style={{ color: 'hsl(30 15% 30%)' }}
+          className="inline-flex items-center gap-1.5 text-[13px] font-medium mt-3 transition-all duration-200 hover:gap-2"
+          style={{ color: 'hsl(0 0% 20%)' }}
           data-testid={`link-open-entry-${entry.id}`}
         >
           Open Entry
@@ -180,7 +158,7 @@ export default function Home() {
     setTimeout(() => {
       setIsJournalOpen(true);
       setIsAnimating(false);
-    }, 900);
+    }, 1000);
   }, []);
 
   const filteredEntries = ENTRIES.filter(entry => {
@@ -193,61 +171,53 @@ export default function Home() {
 
   if (!isJournalOpen) {
     return (
-      <div className="min-h-screen paper-texture flex items-center justify-center p-4">
+      <div className="min-h-screen bg-white flex items-center justify-center p-4">
         <div className="journal-wrapper">
           <div 
-            className={`journal-cover-animated ${isAnimating ? 'opening' : ''}`}
+            className={`journal-cover ${isAnimating ? 'opening' : ''} journal-cover-wrapper relative rounded-xl cursor-pointer group`}
+            style={{ width: '400px', height: '68vh', maxHeight: '700px', minHeight: '520px' }}
+            onClick={handleOpenJournal}
+            onKeyDown={(e) => e.key === 'Enter' && handleOpenJournal()}
+            tabIndex={0}
+            role="button"
+            aria-label="Open the journal"
+            data-testid="button-open-journal"
           >
-            <div 
-              className="journal-cover journal-cover-wrapper relative rounded-lg cursor-pointer group"
-              style={{ width: '420px', height: '65vh', maxHeight: '680px', minHeight: '500px' }}
-              onClick={handleOpenJournal}
-              onKeyDown={(e) => e.key === 'Enter' && handleOpenJournal()}
-              tabIndex={0}
-              role="button"
-              aria-label="Open the journal"
-              data-testid="button-open-journal"
-            >
-              <div className="journal-spine absolute left-0 top-0 bottom-0 w-7 rounded-l-lg" />
+            <div className="journal-spine absolute left-0 top-0 bottom-0 w-8 rounded-l-xl" />
+            
+            <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-12">
+              <h1 
+                className="logo-text text-5xl sm:text-6xl mb-3"
+                style={{ color: 'rgba(255,255,255,0.9)' }}
+              >
+                entry one
+              </h1>
+              <p 
+                className="text-[11px] tracking-[0.3em] uppercase mb-20"
+                style={{ 
+                  fontFamily: 'Inter, sans-serif',
+                  color: 'rgba(255,255,255,0.5)',
+                  fontWeight: 400
+                }}
+              >
+                A Living Archive of Beginnings
+              </p>
               
-              <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-10">
-                <h1 
-                  className="text-4xl sm:text-5xl tracking-wide mb-4"
-                  style={{ 
-                    fontFamily: 'Playfair Display, serif',
-                    color: 'hsl(42 20% 82%)',
-                    fontWeight: 500
-                  }}
-                >
-                  EntryOne
-                </h1>
-                <p 
-                  className="text-sm tracking-[0.25em] uppercase mb-16"
-                  style={{ 
-                    fontFamily: 'Source Sans 3, sans-serif',
-                    color: 'hsl(42 15% 55%)',
-                    fontWeight: 400
-                  }}
-                >
-                  A Living Archive of Beginnings
-                </p>
-                
-                <button 
-                  className="px-8 py-3.5 rounded-sm text-sm font-medium tracking-wide transition-all duration-300 hover:shadow-lg group-hover:scale-[1.02]"
-                  style={{ 
-                    fontFamily: 'Source Sans 3, sans-serif',
-                    background: 'hsl(42 25% 92%)',
-                    color: 'hsl(30 15% 20%)'
-                  }}
-                  data-testid="button-open-journal-cta"
-                >
-                  Open the Journal
-                </button>
-              </div>
-              
-              <div className="elastic-band absolute right-5 top-0 bottom-0 w-3.5 rounded-full" />
-              <div className="bookmark-ribbon absolute bottom-0 left-1/2 -translate-x-1/2 w-5 h-20 translate-y-10 rounded-b-sm" />
+              <button 
+                className="px-8 py-4 rounded-lg text-[13px] font-medium tracking-wide transition-all duration-300 group-hover:shadow-xl group-hover:scale-[1.02]"
+                style={{ 
+                  fontFamily: 'Inter, sans-serif',
+                  background: 'rgba(255,255,255,0.95)',
+                  color: 'hsl(0 0% 10%)'
+                }}
+                data-testid="button-open-journal-cta"
+              >
+                Open the Journal
+              </button>
             </div>
+            
+            <div className="elastic-band absolute right-6 top-0 bottom-0 w-3 rounded-full" />
+            <div className="bookmark-ribbon absolute bottom-0 left-1/2 -translate-x-1/2 w-5 h-20 translate-y-12 rounded-b" />
           </div>
         </div>
       </div>
@@ -255,15 +225,15 @@ export default function Home() {
   }
 
   return (
-    <div className={`min-h-screen paper-texture archive-reveal ${isJournalOpen ? 'visible' : ''}`}>
+    <div className={`min-h-screen bg-white archive-view ${isJournalOpen ? 'visible' : ''}`}>
       <div className="flex flex-col md:flex-row min-h-screen">
-        <nav className="md:hidden overflow-x-auto border-b" style={{ borderColor: 'hsl(35 12% 85%)' }}>
-          <div className="flex whitespace-nowrap px-4 py-2">
+        <nav className="md:hidden overflow-x-auto border-b border-[hsl(0,0%,94%)] bg-white/80 backdrop-blur-lg sticky top-0 z-50">
+          <div className="flex whitespace-nowrap px-4 py-1">
             {NAV_ITEMS.map((item) => (
               <button
                 key={item}
                 onClick={() => setActiveNav(item)}
-                className={`index-nav-item border-l-0 border-b-2 ${activeNav === item ? 'active border-b-[hsl(30,15%,25%)]' : 'border-b-transparent'}`}
+                className={`nav-item border-l-0 border-b-2 px-5 py-3 ${activeNav === item ? 'text-[hsl(0,0%,8%)] border-b-[hsl(0,0%,8%)]' : 'border-b-transparent'}`}
                 data-testid={`nav-${item.toLowerCase()}`}
               >
                 {item}
@@ -272,20 +242,20 @@ export default function Home() {
           </div>
         </nav>
 
-        <aside className="hidden md:block w-48 shrink-0 border-r pt-12" style={{ borderColor: 'hsl(35 12% 85%)' }}>
-          <div className="sticky top-12">
+        <aside className="hidden md:block w-56 shrink-0 border-r border-[hsl(0,0%,94%)] pt-14 bg-[hsl(0,0%,99%)]">
+          <div className="sticky top-14">
             <h2 
-              className="px-6 mb-6 text-xl"
-              style={{ fontFamily: 'Playfair Display, serif', color: 'hsl(30 15% 20%)' }}
+              className="logo-text px-6 mb-10 text-3xl"
+              style={{ color: 'hsl(0 0% 8%)' }}
             >
-              EntryOne
+              entry one
             </h2>
-            <nav className="space-y-1">
+            <nav className="space-y-1 px-2">
               {NAV_ITEMS.map((item) => (
                 <button
                   key={item}
                   onClick={() => setActiveNav(item)}
-                  className={`index-nav-item block w-full text-left ${activeNav === item ? 'active' : ''}`}
+                  className={`nav-item block rounded-lg ${activeNav === item ? 'active' : ''}`}
                   data-testid={`nav-${item.toLowerCase()}`}
                 >
                   {item}
@@ -295,37 +265,32 @@ export default function Home() {
           </div>
         </aside>
 
-        <main className="flex-1 py-10 px-6 md:px-12">
+        <main className="flex-1 py-12 px-6 md:px-14">
           <div className="max-w-4xl mx-auto">
             {activeNav === 'Archive' && (
               <>
-                <header className="mb-10">
+                <header className="mb-12">
                   <h1 
-                    className="text-3xl mb-2"
-                    style={{ fontFamily: 'Playfair Display, serif', color: 'hsl(30 15% 15%)' }}
+                    className="text-4xl mb-3"
+                    style={{ fontFamily: 'Cormorant Garamond, serif', color: 'hsl(0 0% 8%)', fontWeight: 500 }}
                   >
                     Archive
                   </h1>
-                  <p style={{ color: 'hsl(30 10% 45%)', fontFamily: 'Source Sans 3, sans-serif' }}>
+                  <p className="text-[15px]" style={{ color: 'hsl(0 0% 50%)', fontFamily: 'Inter, sans-serif' }}>
                     Stories of beginnings, pivots, and quiet wins.
                   </p>
                 </header>
 
-                <div className="flex flex-col sm:flex-row gap-3 mb-10">
+                <div className="flex flex-col sm:flex-row gap-3 mb-12">
                   <div className="relative flex-1">
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: 'hsl(30 10% 50%)' }} />
+                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: 'hsl(0 0% 50%)' }} />
                     <input
                       type="search"
                       placeholder="Search entries..."
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
-                      className="w-full pl-10 pr-4 py-2.5 border rounded text-sm focus:outline-none focus:ring-2"
-                      style={{ 
-                        fontFamily: 'Source Sans 3, sans-serif',
-                        background: 'hsl(44 28% 96%)',
-                        borderColor: 'hsl(35 12% 82%)',
-                        color: 'hsl(30 15% 20%)'
-                      }}
+                      className="modern-input w-full pl-11 pr-4"
+                      style={{ fontFamily: 'Inter, sans-serif' }}
                       data-testid="input-search"
                     />
                   </div>
@@ -333,13 +298,8 @@ export default function Home() {
                     <select
                       value={categoryFilter}
                       onChange={(e) => setCategoryFilter(e.target.value)}
-                      className="appearance-none w-full sm:w-44 px-4 py-2.5 pr-10 border rounded text-sm focus:outline-none focus:ring-2 cursor-pointer"
-                      style={{ 
-                        fontFamily: 'Source Sans 3, sans-serif',
-                        background: 'hsl(44 28% 96%)',
-                        borderColor: 'hsl(35 12% 82%)',
-                        color: 'hsl(30 15% 20%)'
-                      }}
+                      className="modern-input appearance-none w-full sm:w-48 pr-10 cursor-pointer"
+                      style={{ fontFamily: 'Inter, sans-serif' }}
                       data-testid="select-category-filter"
                     >
                       <option value="all">All Categories</option>
@@ -347,11 +307,11 @@ export default function Home() {
                       <option value="Pivot">Pivot</option>
                       <option value="Quiet Win">Quiet Win</option>
                     </select>
-                    <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 pointer-events-none" style={{ color: 'hsl(30 10% 50%)' }} />
+                    <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 pointer-events-none" style={{ color: 'hsl(0 0% 50%)' }} />
                   </div>
                 </div>
 
-                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12 mb-16">
+                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-14 mb-20">
                   {filteredEntries.map((entry, index) => (
                     <EntryCard key={entry.id} entry={entry} index={index} />
                   ))}
@@ -360,40 +320,37 @@ export default function Home() {
                 <section>
                   <h2 
                     className="text-2xl mb-8"
-                    style={{ fontFamily: 'Playfair Display, serif', color: 'hsl(30 15% 15%)' }}
+                    style={{ fontFamily: 'Cormorant Garamond, serif', color: 'hsl(0 0% 8%)', fontWeight: 500 }}
                   >
                     Featured Spread
                   </h2>
-                  <div 
-                    className="rounded-lg p-8 md:p-12"
-                    style={{ background: 'hsl(44 25% 93%)', border: '1px solid hsl(35 12% 85%)' }}
-                  >
-                    <div className="grid md:grid-cols-2 gap-12 items-center">
+                  <div className="glass-card p-8 md:p-14">
+                    <div className="grid md:grid-cols-2 gap-14 items-center">
                       <div className="text-center">
                         <p 
-                          className="text-[10px] tracking-[0.2em] uppercase mb-6"
-                          style={{ color: 'hsl(30 10% 45%)', fontFamily: 'Source Sans 3, sans-serif' }}
+                          className="text-[10px] tracking-[0.25em] uppercase mb-8"
+                          style={{ color: 'hsl(0 0% 50%)', fontFamily: 'Inter, sans-serif' }}
                         >
                           Letter to Your Future Self
                         </p>
-                        <div className="artifact-envelope w-44 h-32 mx-auto rounded-sm">
+                        <div className="artifact-envelope w-44 h-32 mx-auto">
                           <div className="seal" />
                         </div>
                       </div>
                       
                       <div className="text-center">
                         <p 
-                          className="text-[10px] tracking-[0.2em] uppercase mb-6"
-                          style={{ color: 'hsl(30 10% 45%)', fontFamily: 'Source Sans 3, sans-serif' }}
+                          className="text-[10px] tracking-[0.25em] uppercase mb-8"
+                          style={{ color: 'hsl(0 0% 50%)', fontFamily: 'Inter, sans-serif' }}
                         >
-                          Polaroid Picture of Yourself at the Moment
+                          Polaroid Picture of Yourself
                         </p>
                         <div className="artifact-polaroid w-36 mx-auto" style={{ transform: 'rotate(2deg)' }}>
-                          <div className="bg-[hsl(35,10%,85%)] aspect-square" />
+                          <div className="bg-gradient-to-b from-[hsl(0,0%,95%)] to-[hsl(0,0%,88%)] aspect-square rounded-sm" />
                         </div>
                         <p 
-                          className="handwritten text-sm mt-4"
-                          style={{ color: 'hsl(30 12% 40%)' }}
+                          className="handwritten text-lg mt-5"
+                          style={{ color: 'hsl(0 0% 40%)' }}
                         >
                           live, create, tell the story
                         </p>
@@ -407,20 +364,20 @@ export default function Home() {
             {activeNav === 'About' && (
               <div className="max-w-xl opacity-0 animate-fade-in-up">
                 <h1 
-                  className="text-3xl mb-6"
-                  style={{ fontFamily: 'Playfair Display, serif', color: 'hsl(30 15% 15%)' }}
+                  className="text-4xl mb-8"
+                  style={{ fontFamily: 'Cormorant Garamond, serif', color: 'hsl(0 0% 8%)', fontWeight: 500 }}
                 >
-                  About EntryOne
+                  About entry one
                 </h1>
                 <p 
-                  className="leading-relaxed mb-4"
-                  style={{ color: 'hsl(30 10% 30%)', fontFamily: 'Source Sans 3, sans-serif' }}
+                  className="text-[15px] leading-relaxed mb-5"
+                  style={{ color: 'hsl(0 0% 30%)', fontFamily: 'Inter, sans-serif' }}
                 >
-                  EntryOne is a living archive dedicated to capturing the moments that mark new chapters in people's lives. We believe that every beginning, no matter how small, deserves to be documented and celebrated.
+                  entry one is a living archive dedicated to capturing the moments that mark new chapters in people's lives. We believe that every beginning, no matter how small, deserves to be documented and celebrated.
                 </p>
                 <p 
-                  className="leading-relaxed"
-                  style={{ color: 'hsl(30 10% 30%)', fontFamily: 'Source Sans 3, sans-serif' }}
+                  className="text-[15px] leading-relaxed"
+                  style={{ color: 'hsl(0 0% 30%)', fontFamily: 'Inter, sans-serif' }}
                 >
                   Through personal narratives and reflections, we create a tapestry of human experience—one entry at a time.
                 </p>
@@ -430,20 +387,20 @@ export default function Home() {
             {activeNav === 'Mission' && (
               <div className="max-w-xl opacity-0 animate-fade-in-up">
                 <h1 
-                  className="text-3xl mb-6"
-                  style={{ fontFamily: 'Playfair Display, serif', color: 'hsl(30 15% 15%)' }}
+                  className="text-4xl mb-8"
+                  style={{ fontFamily: 'Cormorant Garamond, serif', color: 'hsl(0 0% 8%)', fontWeight: 500 }}
                 >
                   Our Mission
                 </h1>
                 <p 
-                  className="leading-relaxed mb-4"
-                  style={{ color: 'hsl(30 10% 30%)', fontFamily: 'Source Sans 3, sans-serif' }}
+                  className="text-[15px] leading-relaxed mb-5"
+                  style={{ color: 'hsl(0 0% 30%)', fontFamily: 'Inter, sans-serif' }}
                 >
                   To collect and preserve the stories of beginnings—those pivotal moments when someone chose to start anew, pivot directions, or celebrate a quiet personal victory.
                 </p>
                 <p 
-                  className="leading-relaxed"
-                  style={{ color: 'hsl(30 10% 30%)', fontFamily: 'Source Sans 3, sans-serif' }}
+                  className="text-[15px] leading-relaxed"
+                  style={{ color: 'hsl(0 0% 30%)', fontFamily: 'Inter, sans-serif' }}
                 >
                   We aim to inspire others by showing that every journey starts with a single, brave step forward.
                 </p>
@@ -453,26 +410,18 @@ export default function Home() {
             {activeNav === 'Contribute' && (
               <div className="max-w-xl opacity-0 animate-fade-in-up">
                 <h1 
-                  className="text-3xl mb-6"
-                  style={{ fontFamily: 'Playfair Display, serif', color: 'hsl(30 15% 15%)' }}
+                  className="text-4xl mb-8"
+                  style={{ fontFamily: 'Cormorant Garamond, serif', color: 'hsl(0 0% 8%)', fontWeight: 500 }}
                 >
                   Share Your Entry
                 </h1>
                 <p 
-                  className="leading-relaxed mb-6"
-                  style={{ color: 'hsl(30 10% 30%)', fontFamily: 'Source Sans 3, sans-serif' }}
+                  className="text-[15px] leading-relaxed mb-8"
+                  style={{ color: 'hsl(0 0% 30%)', fontFamily: 'Inter, sans-serif' }}
                 >
                   Do you have a beginning worth sharing? We'd love to hear your story and add it to our growing archive of human experience.
                 </p>
-                <button
-                  className="px-6 py-3 rounded text-sm font-medium tracking-wide transition-all duration-300 hover:shadow-md"
-                  style={{ 
-                    fontFamily: 'Source Sans 3, sans-serif',
-                    background: 'hsl(30 15% 25%)',
-                    color: 'hsl(42 25% 95%)'
-                  }}
-                  data-testid="button-submit-entry"
-                >
+                <button className="modern-btn" data-testid="button-submit-entry">
                   Submit Your Story
                 </button>
               </div>

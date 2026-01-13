@@ -64,43 +64,45 @@
     @apply border-border;
   }
   body {
-    @apply antialiased overflow-hidden;
+    @apply antialiased md:overflow-hidden;
     font-family: var(--font-body);
-    background: #121212; /* Darker stage background */
+    background: #121212;
     color: hsl(0 0% 8%);
   }
 }
 
 .stage-container {
-  @apply min-h-screen flex items-center justify-center p-4 sm:p-12;
+  @apply min-h-screen flex items-center justify-center p-4 md:p-12;
 }
 
 .journal-container {
-  @apply relative w-full max-w-[1000px] aspect-[1.4/1] flex transition-all duration-1000 ease-in-out;
+  @apply relative w-full max-w-[1000px] flex flex-col md:flex-row transition-all duration-1000 ease-in-out;
+  @apply md:aspect-[1.4/1];
   perspective: 3000px;
 }
 
 /* Page styling */
 .page {
-  @apply absolute inset-0 bg-white shadow-2xl origin-left transition-all duration-1000 ease-in-out;
+  @apply relative w-full md:w-1/2 md:h-full bg-white shadow-2xl transition-all duration-1000 ease-in-out;
+  @apply min-h-[500px] md:min-h-0;
   backface-visibility: hidden;
   transform-style: preserve-3d;
 }
 
 .page-left {
-  @apply relative w-1/2 h-full bg-white z-10 rounded-l-lg overflow-hidden;
-  box-shadow: inset -5px 0 15px rgba(0,0,0,0.05), -10px 10px 30px rgba(0,0,0,0.1);
+  @apply z-10 rounded-t-lg md:rounded-t-none md:rounded-l-lg overflow-hidden;
+  @apply md:shadow-[inset_-5px_0_15px_rgba(0,0,0,0.05),-10px_10px_30px_rgba(0,0,0,0.1)];
 }
 
 .page-right {
-  @apply relative w-1/2 h-full bg-white z-0 rounded-r-lg overflow-hidden;
-  box-shadow: inset 5px 0 15px rgba(0,0,0,0.05), 10px 10px 30px rgba(0,0,0,0.1);
+  @apply z-0 rounded-b-lg md:rounded-b-none md:rounded-r-lg overflow-hidden;
+  @apply md:shadow-[inset_5px_0_15px_rgba(0,0,0,0.05),10px_10px_30px_rgba(0,0,0,0.1)];
 }
 
 /* Book fold */
 .book-fold {
-  @apply absolute left-1/2 top-0 bottom-0 w-px bg-black/5 z-20 pointer-events-none;
-  box-shadow: 0 0 20px rgba(0,0,0,0.1);
+  @apply absolute left-0 right-0 top-1/2 h-px md:top-0 md:bottom-0 md:left-1/2 md:w-px bg-black/5 z-20 pointer-events-none;
+  @apply shadow-[0_0_20px_rgba(0,0,0,0.1)];
 }
 
 .journal-cover {
@@ -114,13 +116,12 @@
 }
 
 .journal-cover.opened {
-  transform: rotateY(-150deg);
-  pointer-events: none;
-  opacity: 0;
+  @apply opacity-0 pointer-events-none;
+  transform: rotateY(-150deg) scale(0.9);
 }
 
 .journal-cover-content {
-  @apply absolute inset-0 flex flex-col items-center justify-center text-center p-12;
+  @apply absolute inset-0 flex flex-col items-center justify-center text-center p-8 md:p-12;
 }
 
 .logo-text {
@@ -177,7 +178,18 @@
   font-family: 'Caveat', cursive;
 }
 
-/* Animations */
+/* Custom Scrollbar for Right Page */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #eee;
+  border-radius: 10px;
+}
+
 @keyframes contentFadeIn {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
@@ -187,11 +199,10 @@
   animation: contentFadeIn 0.8s ease-out forwards;
 }
 
-@media (max-width: 768px) {
-  .journal-container {
-    @apply aspect-[1/1.6] flex-col;
-  }
-  .page-left, .page-right {
-    @apply w-full h-1/2;
+/* Mobile specific overrides */
+@media (max-width: 767px) {
+  .journal-cover.opened {
+    transform: translateY(-100%) rotateX(90deg);
+    opacity: 0;
   }
 }

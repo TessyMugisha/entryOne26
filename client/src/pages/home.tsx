@@ -1,5 +1,5 @@
 import { useState, useCallback, useMemo } from 'react';
-import { Search, ChevronDown, ArrowUpRight } from 'lucide-react';
+import { Search, ChevronDown } from 'lucide-react';
 
 interface Entry {
   id: string;
@@ -38,15 +38,15 @@ export default function Home() {
       <div className={`journal-container ${isOpen ? 'opened' : ''}`}>
         
         {/* Left Page: Navigation & Filter */}
-        <div className="page-left p-12 flex flex-col">
-          <header className="mb-12">
-            <h2 className="logo-text text-3xl mb-12">entry one</h2>
-            <nav className="flex flex-col gap-6">
+        <div className="page page-left p-8 md:p-12 flex flex-col">
+          <header className="mb-8 md:mb-12">
+            <h2 className="logo-text text-3xl mb-8 md:mb-12">entry one</h2>
+            <nav className="flex flex-row md:flex-col gap-4 md:gap-6 overflow-x-auto md:overflow-visible pb-4 md:pb-0 scrollbar-none">
               {NAV_ITEMS.map(item => (
                 <button 
                   key={item}
                   onClick={() => setActiveNav(item)}
-                  className={`nav-item text-left ${activeNav === item ? 'active' : ''}`}
+                  className={`nav-item text-left whitespace-nowrap ${activeNav === item ? 'active' : ''}`}
                 >
                   {item}
                 </button>
@@ -54,7 +54,7 @@ export default function Home() {
             </nav>
           </header>
 
-          <div className="mt-auto space-y-8">
+          <div className="mt-auto space-y-6 md:space-y-8">
             <div className="relative">
               <Search className="absolute left-0 top-1/2 -translate-y-1/2 w-4 h-4 text-black/20" />
               <input 
@@ -81,10 +81,10 @@ export default function Home() {
         </div>
 
         {/* Right Page: Content Grid */}
-        <div className="page-right p-12 overflow-y-auto custom-scrollbar">
+        <div className="page page-right p-8 md:p-12 overflow-y-auto custom-scrollbar">
           <div className="animate-content">
             {activeNav === 'Archive' ? (
-              <div className="grid grid-cols-2 gap-x-8 gap-y-12">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-12">
                 {filteredEntries.map((entry, idx) => (
                   <div key={entry.id} className={`group animate-content stagger-${(idx % 4) + 1}`}>
                     <div className="aspect-[4/5] mb-4 overflow-hidden rounded-sm">
@@ -115,7 +115,7 @@ export default function Home() {
                 ))}
               </div>
             ) : (
-              <div className="max-w-xs mx-auto text-center pt-20">
+              <div className="max-w-xs mx-auto text-center pt-10 md:pt-20">
                 <h3 className="text-2xl mb-4 font-serif italic">{activeNav}</h3>
                 <p className="text-sm text-black/60 leading-relaxed">
                   {activeNav === 'About' && "EntryOne is a spatial archive for the moments that define us. A curated space where beginnings are preserved and celebrated through a modern lens."}
@@ -134,17 +134,17 @@ export default function Home() {
           className={`journal-cover ${isOpen ? 'opened' : ''}`}
           onClick={() => setIsOpen(true)}
         >
-          <div className="journal-spine absolute left-0 top-0 bottom-0 w-10 rounded-l-lg" />
+          <div className="journal-spine absolute left-0 top-0 bottom-0 w-8 md:w-10 rounded-l-lg" />
           <div className="journal-cover-content">
-            <h1 className="logo-text text-6xl text-white/90 mb-4">entry one</h1>
-            <p className="text-[10px] tracking-[0.4em] uppercase text-white/40 mb-20 font-light">Archive of Beginnings</p>
-            <div className="w-12 h-px bg-white/20 mb-8" />
-            <button className="text-[11px] uppercase tracking-widest text-white/80 font-medium hover:text-white transition-colors">
+            <h1 className="logo-text text-5xl md:text-6xl text-white/90 mb-4">entry one</h1>
+            <p className="text-[9px] md:text-[10px] tracking-[0.4em] uppercase text-white/40 mb-16 md:mb-20 font-light">Archive of Beginnings</p>
+            <div className="w-10 md:w-12 h-px bg-white/20 mb-8" />
+            <button className="text-[10px] md:text-[11px] uppercase tracking-widest text-white/80 font-medium hover:text-white transition-colors">
               Enter the Archive
             </button>
           </div>
-          <div className="elastic-band absolute right-8 top-0 bottom-0 w-3 rounded-full" />
-          <div className="bookmark-ribbon absolute bottom-0 left-1/2 -translate-x-1/2 w-4 h-24 translate-y-12 rounded-b-sm" />
+          <div className="elastic-band absolute right-6 md:right-8 top-0 bottom-0 w-2 md:w-3 rounded-full" />
+          <div className="bookmark-ribbon absolute bottom-0 left-1/2 -translate-x-1/2 w-4 h-20 md:h-24 translate-y-10 md:translate-y-12 rounded-b-sm" />
         </div>
       </div>
     </div>

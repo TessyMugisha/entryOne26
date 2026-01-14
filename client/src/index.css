@@ -59,15 +59,67 @@
   --radius: 0.75rem;
 }
 
+.dark {
+  --background: 0 0% 8%;
+  --foreground: 0 0% 98%;
+  --card: 0 0% 8%;
+  --card-foreground: 0 0% 98%;
+  --popover: 0 0% 8%;
+  --popover-foreground: 0 0% 98%;
+  --primary: 0 0% 98%;
+  --primary-foreground: 0 0% 8%;
+  --secondary: 0 0% 14%;
+  --secondary-foreground: 0 0% 98%;
+  --muted: 0 0% 14%;
+  --muted-foreground: 0 0% 65%;
+  --accent: 0 0% 14%;
+  --accent-foreground: 0 0% 98%;
+  --destructive: 0 65% 45%;
+  --destructive-foreground: 0 0% 98%;
+  --border: 0 0% 14%;
+  --input: 0 0% 14%;
+  --ring: 0 0% 83%;
+}
+
 @layer base {
   * {
     @apply border-border;
   }
+  
+  /* LIGHT MODE - Default */
   body {
     @apply antialiased md:overflow-hidden;
     font-family: var(--font-body);
-    background: #121212;
+    background: hsl(42, 25%, 95%); /* Light cream background */
     color: hsl(0 0% 8%);
+    transition: background 0.3s ease;
+  }
+  
+  /* DARK MODE - When .dark class is on html or body */
+  body.dark,
+  html.dark body {
+    background: #0a0a0a; /* Dark background */
+    color: hsl(0 0% 98%);
+  }
+  
+  /* Geometric pattern background - subtle */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url('/patterns.png');
+    background-size: 300px 300px;
+    background-repeat: repeat;
+    opacity: 0.03;
+    z-index: -1;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+  
+  /* Pattern more visible in dark mode */
+  body.dark::after,
+  html.dark body::after {
+    opacity: 0.05;
   }
 }
 
@@ -76,17 +128,86 @@
 }
 
 .journal-container {
-  @apply relative w-full max-w-[1000px] flex flex-col md:flex-row transition-all duration-1000 ease-in-out;
-  @apply md:aspect-[1.4/1];
+  @apply relative w-full flex flex-col md:flex-row transition-all duration-1000 ease-in-out;
+  @apply md:aspect-[1.5/1]; /* Wider aspect ratio - was 1.4/1 */
+  max-width: 1150px; /* Wider - was 1000px */
   perspective: 3000px;
 }
 
-/* Page styling */
+/* Slightly larger on bigger screens */
+@media (min-width: 1440px) {
+  .journal-container {
+    max-width: 1300px;
+  }
+}
+
+/* LIGHT MODE PAGES - White with black text */
 .page {
-  @apply relative w-full md:w-1/2 md:h-full bg-white shadow-2xl transition-all duration-1000 ease-in-out;
+  @apply relative w-full md:w-1/2 md:h-full shadow-2xl transition-all duration-1000 ease-in-out;
   @apply min-h-[400px] md:min-h-0;
+  background: #ffffff; /* White pages */
+  color: #0a0a0a; /* Black text */
   backface-visibility: hidden;
   transform-style: preserve-3d;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* DARK MODE PAGES - Dark with white text */
+body.dark .page,
+html.dark .page {
+  background: #0a0a0a; /* Dark pages */
+  color: #f5f5f5; /* White text */
+}
+
+/* Force all text elements to be white in dark mode */
+body.dark .page *,
+html.dark .page * {
+  color: inherit;
+}
+
+body.dark .page h1,
+body.dark .page h2,
+body.dark .page h3,
+body.dark .page h4,
+body.dark .page h5,
+body.dark .page h6,
+body.dark .page p,
+body.dark .page span,
+body.dark .page div,
+body.dark .page a,
+body.dark .page li,
+html.dark .page h1,
+html.dark .page h2,
+html.dark .page h3,
+html.dark .page h4,
+html.dark .page h5,
+html.dark .page h6,
+html.dark .page p,
+html.dark .page span,
+html.dark .page div,
+html.dark .page a,
+html.dark .page li {
+  color: #f5f5f5 !important;
+}
+
+/* Card boxes in dark mode */
+body.dark .page [class*="border-black"],
+html.dark .page [class*="border-black"] {
+  border-color: rgba(255, 255, 255, 0.1) !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+}
+
+/* Buttons in dark mode - white with black text */
+body.dark .page button[class*="bg-black"],
+html.dark .page button[class*="bg-black"] {
+  background: #ffffff !important;
+  color: #000000 !important;
+}
+
+body.dark .page button[class*="bg-black"]:hover,
+html.dark .page button[class*="bg-black"]:hover {
+  background: #f0f0f0 !important;
+  color: #000000 !important;
 }
 
 .page-left {
@@ -94,15 +215,32 @@
   @apply md:shadow-[inset_-5px_0_15px_rgba(0,0,0,0.05),-10px_10px_30px_rgba(0,0,0,0.1)];
 }
 
+body.dark .page-left,
+html.dark .page-left {
+  @apply md:shadow-[inset_-5px_0_15px_rgba(0,0,0,0.3),-10px_10px_30px_rgba(0,0,0,0.5)];
+}
+
 .page-right {
   @apply z-0 rounded-b-lg md:rounded-b-none md:rounded-r-lg overflow-hidden;
   @apply md:shadow-[inset_5px_0_15px_rgba(0,0,0,0.05),10px_10px_30px_rgba(0,0,0,0.1)];
+}
+
+body.dark .page-right,
+html.dark .page-right {
+  @apply md:shadow-[inset_5px_0_15px_rgba(0,0,0,0.3),10px_10px_30px_rgba(0,0,0,0.5)];
 }
 
 /* Book fold */
 .book-fold {
   @apply absolute left-0 right-0 top-1/2 h-px md:top-0 md:bottom-0 md:left-1/2 md:w-px bg-black/5 z-20 pointer-events-none;
   @apply shadow-[0_0_20px_rgba(0,0,0,0.1)];
+  transition: background 0.3s ease;
+}
+
+body.dark .book-fold,
+html.dark .book-fold {
+  background: rgba(255, 255, 255, 0.1);
+  @apply shadow-[0_0_20px_rgba(255,255,255,0.05)];
 }
 
 .journal-cover {
@@ -134,10 +272,80 @@
   @apply absolute inset-0 flex flex-col items-center justify-center text-center p-8 md:p-12;
 }
 
+/* Ensure all text on journal cover is light colored */
+.journal-cover-content * {
+  color: hsl(42, 20%, 82%) !important;
+}
+
+.journal-cover-content h1,
+.journal-cover-content h2,
+.journal-cover-content p,
+.journal-cover-content button {
+  color: hsl(42, 20%, 82%) !important;
+}
+
+/* Subtitle should be slightly muted */
+.journal-cover-content .subtitle {
+  color: hsl(42, 15%, 55%) !important;
+}
+
 .logo-text {
   font-family: 'Caveat', cursive;
   font-weight: 600;
   letter-spacing: -0.02em;
+}
+
+/* Logo image styling - switches based on theme */
+.logo-image {
+  width: auto;
+  height: 2.5rem;
+  object-fit: contain;
+  transition: opacity 0.3s ease;
+}
+
+/* Larger logo on journal cover */
+.journal-cover-content .logo-image {
+  height: 4rem;
+  margin-bottom: 1rem;
+}
+
+@media (min-width: 768px) {
+  .logo-image {
+    height: 3rem;
+  }
+  
+  .journal-cover-content .logo-image {
+    height: 5rem;
+  }
+}
+
+/* Hide dark logo by default (light mode) */
+.logo-image.logo-dark {
+  display: block;
+}
+
+.logo-image.logo-light {
+  display: none;
+}
+
+/* Switch logos in dark mode */
+body.dark .logo-image.logo-dark,
+html.dark .logo-image.logo-dark {
+  display: none;
+}
+
+body.dark .logo-image.logo-light,
+html.dark .logo-image.logo-light {
+  display: block;
+}
+
+/* IMPORTANT: Journal cover is ALWAYS dark, so ALWAYS show white logo */
+.journal-cover-content .logo-image.logo-dark {
+  display: none !important;
+}
+
+.journal-cover-content .logo-image.logo-light {
+  display: block !important;
 }
 
 .category-label {
@@ -149,55 +357,147 @@
   border: 1px solid #f0f0f0;
   padding: 2px 8px;
   border-radius: 100px;
+  transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+body.dark .category-label,
+html.dark .category-label {
+  color: #ccc;
+  border-color: #333;
 }
 
 .nav-item {
   @apply text-xs font-medium tracking-widest uppercase transition-all duration-300;
   color: #888;
+  padding: 0.75rem 1.25rem;
+  border-radius: 0.5rem;
+  position: relative;
+  overflow: hidden;
 }
 
+body.dark .nav-item,
+html.dark .nav-item {
+  color: #aaa;
+}
+
+/* Hover state - subtle background */
+.nav-item:hover {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+body.dark .nav-item:hover,
+html.dark .nav-item:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* Active state - highlighted background */
 .nav-item.active {
   color: #111;
+  background: rgba(0, 0, 0, 0.08);
+  font-weight: 600;
   @apply scale-105;
 }
 
+body.dark .nav-item.active,
+html.dark .nav-item.active {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+/* Remove the dot indicator */
 .nav-item.active::after {
-  content: '';
-  @apply block w-1 h-1 bg-black rounded-full mx-auto mt-1;
+  display: none;
 }
 
 .artifact-polaroid {
   @apply bg-white p-2 pb-6 shadow-lg rotate-1 relative transition-transform duration-500 hover:rotate-0;
+  transition: background 0.3s ease;
+}
+
+body.dark .artifact-polaroid,
+html.dark .artifact-polaroid {
+  background: #1a1a1a;
 }
 
 .artifact-envelope {
   @apply bg-[#fdfdfd] border border-black/5 shadow-md relative rounded-sm h-full w-full;
   background: linear-gradient(180deg, #fefefe, #f9f9f9);
+  transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+body.dark .artifact-envelope,
+html.dark .artifact-envelope {
+  background: linear-gradient(180deg, #2a2a2a, #1f1f1f);
+  border-color: rgba(255, 255, 255, 0.1);
 }
 
 .envelope-flap {
   @apply absolute top-0 left-0 right-0 h-1/2 bg-[#fcfcfc] border-b border-black/5;
   clip-path: polygon(0 0, 50% 85%, 100% 0);
+  transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+body.dark .envelope-flap,
+html.dark .envelope-flap {
+  background: #333;
+  border-color: rgba(255, 255, 255, 0.1);
 }
 
 .seal {
   @apply absolute bottom-1/4 left-1/2 -translate-x-1/2 w-4 h-4 bg-black/90 rounded-full shadow-md;
+  transition: background 0.3s ease;
+}
+
+body.dark .seal,
+html.dark .seal {
+  background: #fff;
 }
 
 .handwritten {
   font-family: 'Caveat', cursive;
 }
 
-/* Custom Scrollbar for Right Page */
+/* Custom Scrollbar for Right Page - Always visible */
+.custom-scrollbar {
+  overflow-y: scroll !important; /* Force scrollbar to always show */
+}
+
 .custom-scrollbar::-webkit-scrollbar {
-  width: 3px;
+  width: 8px; /* Even wider - was 6px */
 }
+
 .custom-scrollbar::-webkit-scrollbar-track {
-  background: transparent;
-}
-.custom-scrollbar::-webkit-scrollbar-thumb {
-  background: #eee;
+  background: rgba(0, 0, 0, 0.08);
   border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #aaa; /* More visible - was #ccc */
+  border-radius: 10px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #888; /* Darker on hover */
+  background-clip: padding-box;
+}
+
+body.dark .custom-scrollbar::-webkit-scrollbar-track,
+html.dark .custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+body.dark .custom-scrollbar::-webkit-scrollbar-thumb,
+html.dark .custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #666; /* More visible in dark mode */
+  background-clip: padding-box;
+}
+
+body.dark .custom-scrollbar::-webkit-scrollbar-thumb:hover,
+html.dark .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #888;
+  background-clip: padding-box;
 }
 
 @keyframes contentFadeIn {

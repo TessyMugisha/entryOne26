@@ -10,15 +10,16 @@ interface Entry {
   artifactType: 'polaroid' | 'envelope' | 'indexCard';
   notionUrl: string;
   date: string;
+  imageUrl: string;
 }
 
 const ENTRIES: Entry[] = [
-  { id: "1", title: "Entry One: No room for Doubt.", personName: "Mike Manzi", role: "Software Engineer at Capital One", category: "Students", artifactType: "polaroid", notionUrl: "https://www.notion.so/Entry-One-Mike-Manzi-s-Journey-963942d4a3d84fd5a7f76f2f831abb6d", date: "2025-10-11" },
-  { id: "2", title: "Entry Two: Just Keep Swimming", personName: "Gaju Gatera", role: "Senior Project Manager at Microsoft", category: "Students", artifactType: "polaroid", notionUrl: "https://www.notion.so/Entry-Two-Gaju-Gatera-s-Journey-877d0b49dc304f59a9e247edf2f86044", date: "2025-10-24" },
-  { id: "3", title: "Entry Three: Service Through Curiosity", personName: "Natasha Farris", role: "ServiceNow Admin at American Fidelity", category: "Professionals", artifactType: "polaroid", notionUrl: "https://www.notion.so/Entry-Three-Building-a-Life-Through-Service-and-Curiosity-Natasha-Farris-2d36d2bc5a1880f9bb65d0b7a4ebc528", date: "2025-11-23" },
-  { id: "4", title: "Building the future of EntryOne", personName: "Liam Vance", role: "Fullstack Builder", category: "Builders", artifactType: "polaroid", notionUrl: "#", date: "2024-03-10" },
-  { id: "5", title: "The Professional's Quiet Morning", personName: "Elena Rossi", role: "Architect", category: "Professionals", artifactType: "envelope", notionUrl: "#", date: "2024-03-05" },
-  { id: "6", title: "Campus Beginnings", personName: "Jamie Smith", role: "Undergrad", category: "Students", artifactType: "indexCard", notionUrl: "#", date: "2024-03-01" },
+  { id: "1", title: "Entry One: No room for Doubt.", personName: "Mike Manzi", role: "Software Engineer at Capital One", category: "Students", artifactType: "polaroid", notionUrl: "https://www.notion.so/Entry-One-Mike-Manzi-s-Journey-963942d4a3d84fd5a7f76f2f831abb6d", date: "2025-10-11", imageUrl: "/mike.png" },
+  { id: "2", title: "Entry Two: Just Keep Swimming", personName: "Gaju Gatera", role: "Senior Project Manager at Microsoft", category: "Students", artifactType: "polaroid", notionUrl: "https://www.notion.so/Entry-Two-Gaju-Gatera-s-Journey-877d0b49dc304f59a9e247edf2f86044", date: "2025-10-24", imageUrl: "/gaju.png" },
+  { id: "3", title: "Entry Three: Service Through Curiosity", personName: "Natasha Farris", role: "ServiceNow Admin at American Fidelity", category: "Professionals", artifactType: "polaroid", notionUrl: "https://www.notion.so/Entry-Three-Building-a-Life-Through-Service-and-Curiosity-Natasha-Farris-2d36d2bc5a1880f9bb65d0b7a4ebc528", date: "2025-11-23", imageUrl: "/natasha.png" },
+  { id: "4", title: "Building the future of EntryOne", personName: "Liam Vance", role: "Fullstack Builder", category: "Builders", artifactType: "polaroid", notionUrl: "#", date: "2024-03-10", imageUrl: "" },
+  { id: "5", title: "The Professional's Quiet Morning", personName: "Elena Rossi", role: "Architect", category: "Professionals", artifactType: "envelope", notionUrl: "#", date: "2024-03-05", imageUrl: "" },
+  { id: "6", title: "Campus Beginnings", personName: "Jamie Smith", role: "Undergrad", category: "Students", artifactType: "indexCard", notionUrl: "#", date: "2024-03-01", imageUrl: "" },
 ];
 
 const NAV_ITEMS = ['Why This Exists', 'The Blog entries', 'Current Sounds', 'What Guides This Space', 'Leave a note'] as const;
@@ -100,11 +101,10 @@ export default function Home() {
                   <div className="shrink-0">
                     <div className="artifact-polaroid">
                       <img 
-                        src="/your-photo.jpg" 
+                        src="/tessy.jpg" 
                         alt="Tessy" 
                         className="w-32 h-32 object-cover"
-                      />
-                    </div>
+                      />                    </div>
                   </div>
                 </div>
 
@@ -214,22 +214,10 @@ export default function Home() {
                         <div className="w-36 h-36 shrink-0 overflow-visible flex items-center justify-center transition-transform duration-500 group-hover:scale-105 group-hover:rotate-2">
                           {entry.artifactType === 'polaroid' && (
                             <div className="artifact-polaroid w-full h-full transition-all duration-500 group-hover:rotate-1">
-                              {entry.id === "1" ? (
+                              {entry.imageUrl ? (
                                 <img 
-                                  src="/mike.png" 
-                                  alt="Mike Manzi"
-                                  className="w-full aspect-square object-cover"
-                                />
-                              ) : entry.id === "2" ? (
-                                <img 
-                                  src="/gaju.png" 
-                                  alt="Gaju Gatera"
-                                  className="w-full aspect-square object-cover"
-                                />
-                              ) : entry.id === "3" ? (
-                                <img 
-                                  src="/natasha.png" 
-                                  alt="Natasha Farris"
+                                  src={entry.imageUrl} 
+                                  alt={entry.personName}
                                   className="w-full aspect-square object-cover"
                                 />
                               ) : (
